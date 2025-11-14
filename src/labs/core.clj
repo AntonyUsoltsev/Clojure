@@ -1,4 +1,4 @@
-(ns lab1.core)
+(ns labs.core)
 
 (defn square [x]
   (* x x))
@@ -52,7 +52,7 @@
 
 
 (defn -main []
-  (println (+ 2 6))
+  (println (+ 2 6 4))
   (def x 10)
   (let [y 5] (+ x y))
   (println (square 3))

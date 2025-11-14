@@ -1,4 +1,4 @@
-(ns lab1.lab1-1)
+(ns labs.lab1)
 
 
 ; 1. Базовые операции над структурами данных
@@ -85,27 +85,26 @@
 
 ; 1.4. Решите задачу с помощью элементарных операций над последовательностями и функционалов
 ; map/reduce/filter
-
 (defn gen-strings-func [alphabet n]
-  (reduce
-    (fn [acc _]
-      (mapcat
-        (fn [s]
-          (map #(str s %)
-               (filter (fn [c] (not= (last s) c)) alphabet)))
-        acc))
-    (map str alphabet)
-    (range 1 n)))
+  (loop [current (map str alphabet)
+         len 1]
+    (if (= len n)
+      current
+      (recur
+        (mapcat (fn [s]
+                  (map #(str s %) (filter (fn [c] (not= (last s) c)) alphabet)))
+                current)
+        (inc len)))))
 
 
 (defn -main []
-  (println "1.1:" (gen-strings [\a \b \c] 2))
-  (println "1.2:" (gen-strings-tail [\a \b \c] 2))
+  (println "1.1:" (permutations [\a \b \c] 3))
+  (println "1.2:" (permutations-tail [\a \b \c] 3))
   (println "1.3 map/filter:"
            (my-map inc [1 2 3])
            (my-filter odd? [1 2 3 4]))
   (println "1.4:" (gen-strings-func [\a \b \c] 2))
 
-  (println "1.1:" (permutations [\a \b \c] 2))
-  (println "1.2:" (permutations-tail [\a \b \c] 2))
+  (println "1.1:" (gen-strings [\a \b \c] 2))
+  (println "1.2:" (gen-strings-tail [\a \b \c] 2))
 )
