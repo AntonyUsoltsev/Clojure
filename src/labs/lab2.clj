@@ -21,7 +21,7 @@
 ;      (* h sum))))
 
 (defn indexed-trapezoid [f h i]
-  (println "Calculating for" (* h i) (* h (inc i)))
+  ;(println "Calculating for" (* h i) (* h (inc i)))
   (*
     (+ (f (* h i)) (f (* h (inc i))))
     h
@@ -31,7 +31,7 @@
 ; integrate_0^x (f(t)dt) = sum_0^{n-1}((f_i + f_{i+1}) * 0.5 * h)
 (defn integrate [f h]
   (fn [x]
-    (let [n (Math/round (/ x h))]
+    (let [n (int (/ x h))]
       (reduce + 0 (map (fn [idx] (indexed-trapezoid f h idx)) (range n))))
     )
   )
@@ -42,7 +42,7 @@
 
 (defn integrate-memoized [f h]
   (memoize (fn [x]
-             (let [n (Math/round (/ x h))]
+             (let [n (int (/ x h))]
                (reduce
                  (fn [acc idx] (+ acc (indexed-trapezoid-mem f h idx)))
                  0
@@ -59,12 +59,13 @@
                    [x-next F-next]))
                [0.0 0.0])]
     (fn [x]
-      (let [idx (int (Math/round (/ x h)))]
+      (let [idx (int (/ x h))]
         (second (nth sums idx))))))
 
 (defn -main []
   (let [h 0.1
         Int (integrate square h)]
+    (println (Int 6))
     (println (Int 6))
     (println (Int 7))
     )
